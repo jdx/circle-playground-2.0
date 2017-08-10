@@ -1,0 +1,46 @@
+---
+defaults: &defaults
+  working_directory: ~/cli
+  docker:
+    - image: node:8
+
+version: 2
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: node -v
+      - run: echo "build"
+  release_win_x32:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: echo "release win 32"
+  release_win_x64:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: echo "release win 64"
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+        filters:
+        tags:
+          only: /^.*/
+      - release_win_x64:
+        filters:
+        tags:
+          only: /^v.*/
+        requires:
+          - build
+      - release_win_x32:
+        filters:
+        tags:
+          only: /^v.*/
+        requires:
+          - build
