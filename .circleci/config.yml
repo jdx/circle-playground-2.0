@@ -34,28 +34,28 @@ workflows:
   build_and_test:
     jobs:
       - build:
-        filters:
-          tags:
-            only: /^.*/
+        # filters:
+        #   tags:
+        #     only: /^.*/
       - test:
         requires:
           - build
-        filters:
-          branches:
-            only: /.*/
+        # filters:
+        #   branches:
+        #     only: /.*/
       - release_win_x64:
         requires:
           - build
-        filters:
-          tags:
-            only: /^v.*/
-          branches:
-            skip: /.*/
+        # filters:
+        #   tags:
+        #     only: /^v.*/
+        #   branches:
+        #     skip: /.*/
       - release_win_x32:
         requires:
           - build
-        filters:
-          tags:
-            only: /^v.*/
-          branches:
-            skip: /.*/
+        # filters:
+        #   tags:
+        #     only: /^v.*/
+        #   branches:
+        #     skip: /.*/
