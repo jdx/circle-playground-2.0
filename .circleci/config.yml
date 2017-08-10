@@ -30,17 +30,21 @@ workflows:
     jobs:
       - build
         filters:
-        tags:
-          only: /^.*/
+          tags:
+            only: /^.*/
       - release_win_x64:
-        filters:
-        tags:
-          only: /^v.*/
         requires:
           - build
+        filters:
+          tags:
+            only: /^v.*/
+          branches:
+            skip: /.*/
       - release_win_x32:
-        filters:
-        tags:
-          only: /^v.*/
         requires:
           - build
+        filters:
+          tags:
+            only: /^v.*/
+          branches:
+            skip: /.*/
