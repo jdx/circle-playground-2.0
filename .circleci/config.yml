@@ -13,6 +13,11 @@ jobs:
       - checkout
       - run: node -v
       - run: echo "build"
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: echo "test"
   release_win_x32:
     <<: *defaults
     steps:
@@ -32,6 +37,12 @@ workflows:
         filters:
           tags:
             only: /^.*/
+      - test:
+        requires:
+          - build
+        filters:
+          branches:
+            only: /.*/
       - release_win_x64:
         requires:
           - build
